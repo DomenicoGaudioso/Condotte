@@ -1,5 +1,5 @@
 # Condotte – Grado di riempimento (Manning)
-
+![alt text](socialCondotte.png)
 Web app professionale per la **determinazione del grado di riempimento** di una
 **condotta circolare in moto uniforme** mediante la formula di Manning.
 
