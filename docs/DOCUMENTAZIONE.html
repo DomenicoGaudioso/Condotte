@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condotte - Documentazione Tecnica</title>
+    <style>
+        :root {
+            --primary: #1a3a5c;
+            --accent: #2980b9;
+            --accent2: #27ae60;
+            --danger: #e74c3c;
+            --warn: #f39c12;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --border: #dee2e6;
+            --text: #212529;
+            --text-light: #6c757d;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #1a3a5c 0%, #2c5f8a 100%);
+            color: white;
+            padding: 60px 20px 100px;
+            text-align: center;
+            position: relative;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: var(--bg);
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        }
+        .hero h1 {
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .hero .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        .badge-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .badge-ntc { background: #3498db; color: white; }
+        .badge-ec { background: #9b59b6; color: white; }
+        .badge-din { background: #e67e22; color: white; }
+        .badge-version { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); }
+        
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* TOC */
+        .toc {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin: 40px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .toc h2 {
+            color: var(--primary);
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+        }
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 10px;
+        }
+        .toc a {
+            color: var(--accent);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: block;
+            transition: background 0.2s;
+        }
+        .toc a:hover {
+            background: #eef4fa;
+        }
+        
+        /* SECTION */
+        .section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .section h2 {
+            color: var(--primary);
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--accent);
+        }
+        .section h3 {
+            color: var(--primary);
+            font-size: 1.2em;
+            margin: 20px 0 12px;
+        }
+        .section p {
+            margin-bottom: 12px;
+            color: #444;
+        }
+        
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95em;
+        }
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        tr:nth-child(even) { background: #f8fafc; }
+        tr:hover { background: #eef4fa; }
+        
+        /* FORMULA BOX */
+        .formula-box {
+            background: #f4f6f9;
+            border-left: 5px solid var(--accent);
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+        }
+        .formula-box .formula-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.85em;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+        .formula-box .formula {
+            font-size: 1.25em;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+        .formula-box .formula-note {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.85em;
+            color: var(--text-light);
+            margin-top: 10px;
+        }
+        
+        /* CARD GRID */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .card h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .card p {
+            font-size: 0.95em;
+            color: #555;
+        }
+        
+        /* BADGE ESITO */
+        .badge-ok {
+            background: #d4edda;
+            color: #155724;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .badge-warn {
+            background: #fff3cd;
+            color: #856404;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .badge-no {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .badge-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        /* NOTE CARDS */
+        .note-card {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid;
+        }
+        .note-info { background: #d1ecf1; border-color: #17a2b8; }
+        .note-success { background: #d4edda; border-color: #28a745; }
+        .note-warn { background: #fff3cd; border-color: #ffc107; }
+        .note-danger { background: #f8d7da; border-color: #dc3545; }
+        .note-card strong { display: block; margin-bottom: 5px; }
+        
+        /* SVG CONTAINER */
+        .svg-container {
+            background: #fafbfc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .svg-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .svg-caption {
+            font-size: 0.9em;
+            color: var(--text-light);
+            margin-top: 12px;
+            font-style: italic;
+        }
+        
+        /* LISTE */
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* CODE */
+        code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+        
+        /* FOOTER */
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 40px 20px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        .footer p {
+            max-width: 800px;
+            margin: 0 auto 15px;
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+        .footer-disclaimer {
+            font-size: 0.85em;
+            opacity: 0.75;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2em; }
+            .hero .subtitle { font-size: 1.1em; }
+            .section { padding: 20px; margin: 20px 10px; }
+            th, td { padding: 8px 10px; font-size: 0.9em; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>Condotte</h1>
+    <p class="subtitle">Calcolo del grado di riempimento di condotte circolari in moto uniforme</p>
+    <p style="opacity: 0.8; margin-bottom: 15px;">Formula di Manning-Strickler | Verifiche normative complete | Report PDF</p>
+    <div class="badge-container">
+        <span class="badge badge-version">v2.0</span>
+        <span class="badge badge-ntc">DIN EN 1671</span>
+        <span class="badge badge-ec">EN 476</span>
+        <span class="badge badge-din">ASCE MOP 36</span>
+        <span class="badge badge-ntc">UNI EN 752</span>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- INDICE -->
+    <nav class="toc">
+        <h2>Indice dei Contenuti</h2>
+        <div class="toc-grid">
+            <a href="#panoramica">1. Panoramica Generale</a>
+            <a href="#funzionalita">2. Funzionalità Principali</a>
+            <a href="#input-output">3. Input e Output</a>
+            <a href="#normativa">4. Riferimenti Normativi</a>
+            <a href="#formule">5. Metodologia di Calcolo</a>
+            <a href="#sezione">6. Geometria della Sezione</a>
+            <a href="#verifiche">7. Verifiche Normative</a>
+            <a href="#avvio">8. Avvio Rapido</a>
+            <a href="#esempio">9. Esempio di Utilizzo</a>
+            <a href="#glossario">10. Glossario</a>
+        </div>
+    </nav>
+
+    <!-- PANORAMICA -->
+    <section id="panoramica" class="section">
+        <h2>1. Panoramica Generale</h2>
+        
+        <p><strong>Condotte</strong> è un'applicazione web professionale per la determinazione del <strong>grado di riempimento</strong> di una condotta circolare in moto uniforme, mediante la formula di Manning-Strickler.</p>
+        
+        <p>L'applicazione calcola tutti i parametri idraulici caratteristici della sezione parzialmente piena, effettua verifiche normative complete secondo gli standard europei (DIN EN 1671, EN 476, UNI EN 752) e americani (ASCE MOP 36), e genera report professionali in formato PDF.</p>
+        
+        <div class="note-card note-info">
+            <strong>Punti di forza</strong>
+            <ul>
+                <li>Risoluzione numerica del tirante con metodo della bisezione (accuratezza 10⁻⁸)</li>
+                <li>Gestione completa dei materiali con coefficienti di Manning predefiniti</li>
+                <li>Sistema di verifiche "semaforo" per immediato riscontro visivo</li>
+                <li>Confronto automatico con diametri DN standard EN 476/ISO</li>
+                <li>Curva idraulica interattiva Q(β) e V(β)</li>
+                <li>Report PDF professionale scaricabile</li>
+            </ul>
+        </div>
+        
+        <h3>Parametri principali</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Parametro</th>
+                    <th>Simbolo</th>
+                    <th>Unità</th>
+                    <th>Intervallo tipico</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Diametro interno</td><td>D</td><td>m</td><td>0.1 – 3.0</td></tr>
+                <tr><td>Coefficiente di Manning</td><td>n</td><td>—</td><td>0.010 – 0.020</td></tr>
+                <tr><td>Pendenza idraulica</td><td>S</td><td>—</td><td>0.0001 – 0.05</td></tr>
+                <tr><td>Portata di progetto</td><td>Q</td><td>m³/s</td><td>0.001 – 100</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- FUNZIONALITA -->
+    <section id="funzionalita" class="section">
+        <h2>2. Funzionalità Principali</h2>
+        
+        <div class="card-grid">
+            <div class="card">
+                <h4>🎯 Calcolo Tirante</h4>
+                <p>Risoluzione numerica y(Q) con metodo della bisezione nel ramo monotono della curva (β ≤ 0.938). Il tirante viene calcolato con precisione 10⁻⁸ m.</p>
+            </div>
+            <div class="card">
+                <h4>📊 Parametri Idraulici</h4>
+                <p>Calcolo completo di area bagnata (A), perimetro bagnato (P), raggio idraulico (Rh), velocità media (V), numero di Froude (Fr), energia specifica (E).</p>
+            </div>
+            <div class="card">
+                <h4>📈 Curve Idrauliche</h4>
+                <p>Generazione curva idraulica completa Q(β) e V(β) con 80 punti di calcolo. Grafici interattivi Plotly con marcatura del punto di progetto.</p>
+            </div>
+            <div class="card">
+                <h4>✅ Verifiche Normative</h4>
+                <p>Sistema di 10 verifiche automatiche con esito semaforico: grado di riempimento, velocità min/max, Froude, margine capacità.</p>
+            </div>
+            <div class="card">
+                <h4>🔄 Confronto DN</h4>
+                <p>Analisi automatica dei diametri DN standard (EN 476/ISO) nell'intervallo 0.5×D ÷ 2.5×D per ottimizzare la scelta progettuale.</p>
+            </div>
+            <div class="card">
+                <h4>📄 Report PDF</h4>
+                <p>Generazione report PDF professionale contenente tutti i parametri di input, risultati, passaggi di calcolo e verifiche normative.</p>
+            </div>
+            <div class="card">
+                <h4>💾 Esportazione Dati</h4>
+                <p>Esportazione CSV della curva idraulica completa, dei passaggi di calcolo e delle verifiche normative. Salvataggio/caricamento parametri JSON.</p>
+            </div>
+            <div class="card">
+                <h4>🏭 Materiali Predefiniti</h4>
+                <p>Libreria di 10 materiali con coefficienti n di Manning e velocità massime tipiche: PVC, gres, calcestruzzo, ghisa, acciaio, fibrocemento.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- INPUT OUTPUT -->
+    <section id="input-output" class="section">
+        <h2>3. Input e Output</h2>
+        
+        <h3>Parametri di Input</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Simbolo</th>
+                    <th>Tipo</th>
+                    <th>Unità</th>
+                    <th>Descrizione</th>
+                    <th>Limiti</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Diametro</td>
+                    <td>D</td>
+                    <td>number</td>
+                    <td>m</td>
+                    <td>Diametro interno della condotta circolare</td>
+                    <td>&gt; 0.05</td>
+                </tr>
+                <tr>
+                    <td>Manning</td>
+                    <td>n</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>Coefficiente di scabrezza di Manning-Strickler</td>
+                    <td>0.005 – 0.05</td>
+                </tr>
+                <tr>
+                    <td>Pendenza</td>
+                    <td>S</td>
+                    <td>number</td>
+                    <td>—</td>
+                    <td>Pendenza idraulica della condotta (J = Δh/L)</td>
+                    <td>&gt; 0.000001</td>
+                </tr>
+                <tr>
+                    <td>Portata</td>
+                    <td>Q</td>
+                    <td>number</td>
+                    <td>m³/s</td>
+                    <td>Portata di progetto in moto uniforme</td>
+                    <td>&gt; 0.001</td>
+                </tr>
+                <tr>
+                    <td>Materiale</td>
+                    <td>—</td>
+                    <td>select</td>
+                    <td>—</td>
+                    <td>Selezione del materiale (determina n e V_max)</td>
+                    <td>10 opzioni</td>
+                </tr>
+                <tr>
+                    <td>Tipo uso</td>
+                    <td>—</td>
+                    <td>select</td>
+                    <td>—</td>
+                    <td>Destinazione d'uso (determina V_min)</td>
+                    <td>5 opzioni</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Risultati Calcolati</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Simbolo</th>
+                    <th>Unità</th>
+                    <th>Descrizione</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Tirante</td><td>y</td><td>m</td><td>Altezza del pelo libero dell'acqua</td></tr>
+                <tr><td>Grado di riempimento</td><td>β = y/D</td><td>—</td><td>Rapporto tra tirante e diametro (0 = vuota, 1 = piena)</td></tr>
+                <tr><td>Area bagnata</td><td>A</td><td>m²</td><td>Sezione trasversale occupata dall'acqua</td></tr>
+                <tr><td>Perimetro bagnato</td><td>P</td><td>m</td><td>Lunghezza del contorno a contatto con l'acqua</td></tr>
+                <tr><td>Raggio idraulico</td><td>Rh = A/P</td><td>m</td><td>Rapporto tra area e perimetro bagnati</td></tr>
+                <tr><td>Velocità media</td><td>V</td><td>m/s</td><td>Velocità media nella sezione bagnata</td></tr>
+                <tr><td>Numero di Froude</td><td>Fr</td><td>—</td><td>Fr < 1 subcritico, Fr = 1 critico, Fr > 1 supercritico</td></tr>
+                <tr><td>Energia specifica</td><td>E</td><td>m</td><td>E = y + V²/(2g)</td></tr>
+                <tr><td>Portata piena</td><td>Q_full</td><td>m³/s</td><td>Portata a sezione completamente piena (β = 1)</td></tr>
+                <tr><td>Portata massima</td><td>Q_max</td><td>m³/s</td><td>Portata massima teorica (si raggiunge a β ≈ 0.938)</td></tr>
+                <tr><td>Rapporto Q/Q_max</td><td>—</td><td>—</td><td>Indice di utilizzo della condotta</td></tr>
+                <tr><td>Larghezza superficie</td><td>T</td><td>m</td><td>Larghezza del pelo libero</td></tr>
+            </tbody>
+        </table>
+        
+        <h3>Libreria Materiali</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Materiale</th>
+                    <th>n Manning</th>
+                    <th>V_max [m/s]</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>PVC / PE liscio (HDPE)</td><td>0.010</td><td>5.0</td><td>Condotte plastiche nuove</td></tr>
+                <tr><td>Gres ceramico smaltato</td><td>0.011</td><td>4.5</td><td>Eccellente resistenza all'abrasione</td></tr>
+                <tr><td>Calcestruzzo liscio (prefabbricato)</td><td>0.012</td><td>6.0</td><td>Tubi prefabbricati, buone condizioni</td></tr>
+                <tr><td>Ghisa sferoidale (duttile)</td><td>0.013</td><td>4.0</td><td>Lunga vita utile</td></tr>
+                <tr><td>Acciaio rivestito (epossidico)</td><td>0.012</td><td>5.0</td><td>Rivestimento interno resina</td></tr>
+                <tr><td>Calcestruzzo armato (scatolare)</td><td>0.015</td><td>4.0</td><td>Culvert, scatolari</td></tr>
+                <tr><td>HDPE corrugato (doppia parete)</td><td>0.018</td><td>4.0</td><td>Parete corrugata esterna</td></tr>
+                <tr><td>Acciaio non rivestito / vecchio</td><td>0.020</td><td>3.0</td><td>Condotte degradate</td></tr>
+                <tr><td>Muratura in mattoni</td><td>0.020</td><td>2.5</td><td>Fognature storiche</td></tr>
+                <tr><td>Fibrocemento (storico)</td><td>0.011</td><td>4.0</td><td>⚠ Contiene amianto</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- NORMATIVA -->
+    <section id="normativa" class="section">
+        <h2>4. Riferimenti Normativi</h2>
+        
+        <p>L'applicazione implementa verifiche secondo i seguenti riferimenti normativi:</p>
+        
+        <div class="card-grid">
+            <div class="card">
+                <h4>DIN EN 1671:2011</h4>
+                <p><strong>Fognature sotto pressione</strong></p>
+                <p>Limite grado di riempimento β ≤ 0.80 per condotte fognarie. Definizione della velocità minima autocircolante per prevenire depositi.</p>
+            </div>
+            <div class="card">
+                <h4>EN 476:2011</h4>
+                <p><strong>Requisiti generali per componenti di sistemi fognari</strong></p>
+                <p>Specifica i requisiti generali per i componenti delle reti fognarie, incluse le condotte a gravità.</p>
+            </div>
+            <div class="card">
+                <h4>ASCE MOP 36</h4>
+                <p><strong>Manual of Practice - Fognature</strong></p>
+                <p>Standard americano per la progettazione delle reti di fognatura: velocità minima 0.60 m/s per garantire l'autopulizia.</p>
+            </div>
+            <div class="card">
+                <h4>UNI EN 752</h4>
+                <p><strong>Sistemi di drenaggio delle acque reflue</strong></p>
+                <p>Norma europea per i sistemi di drenaggio esterni agli edifici: definisce criteri di progettazione idraulica.</p>
+            </div>
+        </div>
+        
+        <h3>Velocità minime autocircolanti per tipo di uso</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo di uso</th>
+                    <th>V_min [m/s]</th>
+                    <th>Riferimento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Fognatura nera (acque reflue)</td><td>0.60</td><td>DIN EN 1671, ASCE MOP 36</td></tr>
+                <tr><td>Fognatura mista</td><td>0.70</td><td>DIN EN 1671</td></tr>
+                <tr><td>Acque meteoriche / pluviali</td><td>0.50</td><td>Buona pratica</td></tr>
+                <tr><td>Irrigazione / acquedotto</td><td>0.30</td><td>Linee guida interne</td></tr>
+                <tr><td>Generico</td><td>0.40</td><td>Valore default</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- FORMULE -->
+    <section id="formule" class="section">
+        <h2>5. Metodologia di Calcolo</h2>
+        
+        <h3>Formula di Manning-Strickler</h3>
+        <div class="formula-box">
+            <div class="formula-label">Portata in moto uniforme per sezione circolare parzialmente piena</div>
+            <div class="formula">Q = (1/n) × A × R<sub>h</sub><sup>2/3</sup> × S<sup>1/2</sup></div>
+            <div class="formula-note">
+                dove:<br>
+                Q = portata [m³/s]<br>
+                n = coefficiente di Manning [—]<br>
+                A = area bagnata [m²]<br>
+                R<sub>h</sub> = raggio idraulico = A/P [m]<br>
+                S = pendenza idraulica [—]
+            </div>
+        </div>
+        
+        <h3>Geometria della sezione circolare</h3>
+        <div class="formula-box">
+            <div class="formula-label">Angolo al centro θ corrispondente al tirante y</div>
+            <div class="formula">θ = arccos(1 − 2y/D)</div>
+            <div class="formula-note">
+                y = tirante idraulico [m]<br>
+                D = diametro interno [m]<br>
+                θ espresso in radianti, range: 0 (y=0) ÷ π (y=D)
+            </div>
+        </div>
+        
+        <div class="formula-box">
+            <div class="formula-label">Area bagnata e perimetro bagnato</div>
+            <div class="formula">A = (D²/8) × (2θ − sin 2θ)</div>
+            <div class="formula">P = D × θ</div>
+            <div class="formula-note">
+                D = diametro [m]<br>
+                θ = angolo al centro [rad]
+            </div>
+        </div>
+        
+        <div class="formula-box">
+            <div class="formula-label">Raggio idraulico</div>
+            <div class="formula">R<sub>h</sub> = A / P</div>
+            <div class="formula-note">
+                Per sezione circolare piena: R<sub>h</sub> = D/4<br>
+                Per sezione circolare a β=0.94: R<sub>h</sub> ≈ 0.304×D (massimo)
+            </div>
+        </div>
+        
+        <h3>Numero di Froude</h3>
+        <div class="formula-box">
+            <div class="formula-label">Froude per sezione aperta parzialmente piena</div>
+            <div class="formula">Fr = V / √(g × D<sub>h</sub>)</div>
+            <div class="formula-note">
+                dove D<sub>h</sub> = A/T è il diametro idraulico<br>
+                T = larghezza della superficie libera [m]<br>
+                g = 9.81 m/s²<br><br>
+                Fr < 1: moto subcritico (preferito per fognature)<br>
+                Fr ≈ 1: condizione critica<br>
+                Fr > 1: moto supercritico
+            </div>
+        </div>
+        
+        <h3>Energia specifica</h3>
+        <div class="formula-box">
+            <div class="formula-label">Energia specifica rispetto al fondo</div>
+            <div class="formula">E = y + V²/(2g)</div>
+            <div class="formula-note">
+                E = energia per unità di peso [m]<br>
+                y = tirante [m]<br>
+                V = velocità media [m/s]<br>
+                g = 9.81 m/s²
+            </div>
+        </div>
+        
+        <h3>Risoluzione numerica y(Q)</h3>
+        <p>La formula di Manning non è invertibile analiticamente per y. L'applicazione usa il <strong>metodo della bisezione</strong>:</p>
+        <ol>
+            <li>Si definisce l'intervallo di ricerca: y ∈ [10⁻⁹, 0.938×D]</li>
+            <li>Si itera dimezzando l'intervallo fino a convergenza (|Q<sub>calc</sub> − Q<sub>target</sub>| &lt; 10⁻⁸)</li>
+            <li>Massimo 300 iterazioni, convergenza tipica in &lt; 50 passi</li>
+        </ol>
+        
+        <div class="note-card note-warn">
+            <strong>Nota importante sulla non monotonicità</strong>
+            La portata Q in funzione di β non è monotona: raggiunge un massimo a β ≈ 0.938, poi diminuisce fino a β = 1.0 (sezione piena). La risoluzione numerica avviene solo nel ramo monotono crescente (β ∈ [0, 0.938]).
+        </div>
+    </section>
+
+    <!-- SEZIONE SVG -->
+    <section id="sezione" class="section">
+        <h2>6. Geometria della Sezione Circolare</h2>
+        
+        <div class="svg-container">
+            <svg viewBox="0 0 600 420" width="600" height="420" xmlns="http://www.w3.org/2000/svg">
+                <!-- Sfondo griglia -->
+                <defs>
+                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e0e0e0" stroke-width="0.5"/>
+                    </pattern>
+                </defs>
+                <rect width="600" height="420" fill="#fafbfc"/>
+                <rect x="50" y="30" width="500" height="350" fill="url(#grid)"/>
+                
+                <!-- Condotta (cerchio) -->
+                <circle cx="300" cy="205" r="150" fill="none" stroke="#1a3a5c" stroke-width="3"/>
+                
+                <!-- Acqua nella condotta -->
+                <path d="M 150,205 
+                         A 150,150 0 0,1 450,205
+                         L 450,280 
+                         A 150,150 0 0,0 150,280 Z" 
+                      fill="#2980b9" fill-opacity="0.3" stroke="none"/>
+                
+                <!-- Acqua填充填充 -->
+                <path d="M 150,205 
+                         Q 300,175 450,205
+                         L 450,280 
+                         A 150,150 0 0,0 150,280 Z" 
+                      fill="#3498db" fill-opacity="0.5"/>
+                
+                <!-- Linea del pelo libero -->
+                <line x1="145" y1="230" x2="455" y2="230" stroke="#e74c3c" stroke-width="2" stroke-dasharray="8,4"/>
+                <text x="460" y="235" font-family="Segoe UI" font-size="12" fill="#e74c3c" font-weight="600">Pelo libero</text>
+                
+                <!-- Tirante y -->
+                <line x1="500" y1="205" x2="500" y2="280" stroke="#27ae60" stroke-width="2"/>
+                <line x1="495" y1="205" x2="505" y2="205" stroke="#27ae60" stroke-width="2"/>
+                <line x1="495" y1="280" x2="505" y2="280" stroke="#27ae60" stroke-width="2"/>
+                <text x="510" y="245" font-family="Segoe UI" font-size="14" fill="#27ae60" font-weight="600">y</text>
+                
+                <!-- Diametro D -->
+                <line x1="150" y1="380" x2="450" y2="380" stroke="#1a3a5c" stroke-width="2"/>
+                <line x1="150" y1="375" x2="150" y2="385" stroke="#1a3a5c" stroke-width="2"/>
+                <line x1="450" y1="375" x2="450" y2="385" stroke="#1a3a5c" stroke-width="2"/>
+                <text x="300" y="400" font-family="Segoe UI" font-size="14" fill="#1a3a5c" font-weight="600" text-anchor="middle">D</text>
+                
+                <!-- Centro -->
+                <circle cx="300" cy="205" r="4" fill="#1a3a5c"/>
+                <text x="315" y="200" font-family="Segoe UI" font-size="11" fill="#1a3a5c">O</text>
+                
+                <!-- Raggio -->
+                <line x1="300" y1="205" x2="395" y2="280" stroke="#8e44ad" stroke-width="1.5" stroke-dasharray="5,3"/>
+                <text x="360" y="230" font-family="Segoe UI" font-size="11" fill="#8e44ad">R = D/2</text>
+                
+                <!-- Angolo theta -->
+                <path d="M 300,205 L 395,280" stroke="none" fill="none"/>
+                <path d="M 320,215 A 25,25 0 0,1 390,270" fill="none" stroke="#f39c12" stroke-width="1.5"/>
+                <text x="370" y="260" font-family="Segoe UI" font-size="11" fill="#f39c12">θ</text>
+                
+                <!-- Area bagnata (A) -->
+                <text x="260" y="270" font-family="Segoe UI" font-size="13" fill="#2980b9" font-weight="600">A</text>
+                
+                <!-- Perimetro bagnato -->
+                <path d="M 150,205 A 150,150 0 0,1 450,205" fill="none" stroke="#e74c3c" stroke-width="3"/>
+                <text x="80" y="100" font-family="Segoe UI" font-size="12" fill="#6c757d">P (perimetro bagnato)</text>
+                
+                <!-- Simboli grandezze -->
+                <text x="80" y="30" font-family="Segoe UI" font-size="13" fill="#1a3a5c" font-weight="600">Sezione circolare - Moto uniforme</text>
+                
+                <!-- Legenda -->
+                <rect x="50" y="50" width="20" height="15" fill="#3498db" fill-opacity="0.5"/>
+                <text x="75" y="62" font-family="Segoe UI" font-size="11" fill="#333">Area bagnata A</text>
+                
+                <line x1="50" y1="80" x2="70" y2="80" stroke="#e74c3c" stroke-width="2" stroke-dasharray="4,2"/>
+                <text x="75" y="84" font-family="Segoe UI" font-size="11" fill="#333">Pelo libero / Perimetro</text>
+                
+                <line x1="50" y1="105" x2="70" y2="105" stroke="#27ae60" stroke-width="2"/>
+                <text x="75" y="109" font-family="Segoe UI" font-size="11" fill="#333">Tirante y</text>
+            </svg>
+            <p class="svg-caption">Fig. 1 – Geometria della sezione circolare parzialmente piena con parametri idraulici principali</p>
+        </div>
+        
+        <h3>Legenda simboli</h3>
+        <table>
+            <thead>
+                <tr><th>Simbolo</th><th>Descrizione</th><th>Formula</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>D</td><td>Diametro interno</td><td>—</td></tr>
+                <tr><td>R</td><td>Raggio (R = D/2)</td><td>—</td></tr>
+                <tr><td>y</td><td>Tirante idraulico</td><td>Altezza pelo libero</td></tr>
+                <tr><td>β</td><td>Grado di riempimento</td><td>β = y/D</td></tr>
+                <tr><td>θ</td><td>Angolo al centro</td><td>θ = arccos(1 − 2y/D)</td></tr>
+                <tr><td>A</td><td>Area bagnata</td><td>A = (D²/8)(2θ − sin 2θ)</td></tr>
+                <tr><td>P</td><td>Perimetro bagnato</td><td>P = D·θ</td></tr>
+                <tr><td>T</td><td>Larghezza superficie libera</td><td>T = 2√(R² − (R−y)²)</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- VERIFICHE -->
+    <section id="verifiche" class="section">
+        <h2>7. Verifiche Normative</h2>
+        
+        <p>L'applicazione effettua automaticamente 10 verifiche normative con sistema semaforico:</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>N.</th>
+                    <th>Verifica</th>
+                    <th>Valore</th>
+                    <th>Limite</th>
+                    <th>Esito</th>
+                    <th>Riferimento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Grado di riempimento β ≤ 0.80</td>
+                    <td>β calcolato</td>
+                    <td>≤ 0.80</td>
+                    <td><span class="badge-ok">OK</span> / <span class="badge-warn">ATTENZIONE</span> / <span class="badge-no">NON OK</span></td>
+                    <td>DIN EN 1671:2011</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Velocità minima V ≥ V_min</td>
+                    <td>V calcolata</td>
+                    <td>≥ 0.50 – 0.70 m/s</td>
+                    <td><span class="badge-ok">OK</span> / <span class="badge-no">NON OK</span></td>
+                    <td>DIN EN 1671, ASCE MOP 36</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Velocità massima V ≤ V_max</td>
+                    <td>V calcolata</td>
+                    <td>≤ 2.5 – 6.0 m/s</td>
+                    <td><span class="badge-ok">OK</span> / <span class="badge-no">NON OK</span></td>
+                    <td>Scheda tecnica materiale</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Q ≤ Q_max (β ≈ 0.94)</td>
+                    <td>Q progetto</td>
+                    <td>≤ Q_max</td>
+                    <td><span class="badge-ok">OK</span> / <span class="badge-no">NON OK</span></td>
+                    <td>Idraulica sezione circolare</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Regime subcritico Fr < 1.0</td>
+                    <td>Fr calcolato</td>
+                    <td>Fr < 1.0</td>
+                    <td><span class="badge-ok">OK</span> / <span class="badge-warn">ATTENZIONE</span> / <span class="badge-no">NON OK</span></td>
+                    <td>Idraulica canali</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Margine capacità Q_full/Q ≥ 1.25</td>
+                    <td>Rapporto</td>
+                    <td>≥ 1.25</td>
+                    <td><span class="badge-ok">OK</span> / <span class="badge-warn">ATTENZIONE</span></td>
+                    <td>Linee guida ISPRA</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>Rapporto Q/Q_max ≤ 1.0</td>
+                    <td>Q/Q_max</td>
+                    <td>≤ 1.0</td>
+                    <td><span class="badge-ok">OK</span> / <span class="badge-no">NON OK</span></td>
+                    <td>Verifica di portata</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>Energia specifica E</td>
+                    <td>E = y + V²/2g</td>
+                    <td>INFO</td>
+                    <td><span class="badge-info">INFO</span></td>
+                    <td>Idraulica di base</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>Classificazione regime</td>
+                    <td>Subcritico/Critico/Supercritico</td>
+                    <td>—</td>
+                    <td><span class="badge-info">INFO</span></td>
+                    <td>Classificazione idraulica</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>Pendenza minima autocircolante</td>
+                    <td>S progetto</td>
+                    <td>S ≥ S_min per V=V_min</td>
+                    <td><span class="badge-ok">OK</span> / <span class="badge-warn">ATTENZIONE</span></td>
+                    <td>DIN EN 1671:2011</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="note-card note-success">
+            <strong>Interpretazione degli esiti</strong>
+            <ul>
+                <li><span class="badge-ok">OK</span> — Il parametro rientra nei limiti normativi</li>
+                <li><span class="badge-warn">ATTENZIONE</span> — Il parametro è prossimo al limite, richiede attenzione</li>
+                <li><span class="badge-no">NON OK</span> — Il parametro supera il limite ammissibile, richiede intervento progettuale</li>
+                <li><span class="badge-info">INFO</span> — Parametro informativo, non soggetto a verifica vincolante</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- AVVIO -->
+    <section id="avvio" class="section">
+        <h2>8. Avvio Rapido</h2>
+        
+        <h3>Requisiti</h3>
+        <p>Python 3.8+ con le seguenti dipendenze:</p>
+        <ul>
+            <li>streamlit</li>
+            <li>numpy</li>
+            <li>pandas</li>
+            <li>plotly</li>
+            <li>fpdf2 (per generazione PDF)</li>
+        </ul>
+        
+        <h3>Installazione e avvio</h3>
+        <pre><code># Clonare o scaricare il progetto
+# Posizionarsi nella directory del progetto
+
+# Installare le dipendenze
+pip install -r requirements.txt
+
+# Avviare l'applicazione
+streamlit run app.py
+
+# L'applicazione si apre automaticamente nel browser
+# all'indirizzo http://localhost:8501</code></pre>
+        
+        <h3>Flusso di lavoro tipico</h3>
+        <ol>
+            <li><strong>Selezionare il materiale</strong> dalla sidebar (determina n e V_max)</li>
+            <li><strong>Impostare il tipo di uso</strong> (determina V_min)</li>
+            <li><strong>Inserire i parametri geometrici</strong>: D, S, Q</li>
+            <li><strong>Verificare il grado di riempimento β</strong> nella scheda "Risultati"</li>
+            <li><strong>Controllare le verifiche</strong> nella scheda "Verifiche avanzate"</li>
+            <li><strong>Esplorare i grafici</strong> delle curve idrauliche</li>
+            <li><strong>Scaricare il report PDF</strong> per la documentazione di progetto</li>
+        </ol>
+    </section>
+
+    <!-- ESEMPIO -->
+    <section id="esempio" class="section">
+        <h2>9. Esempio di Utilizzo</h2>
+        
+        <h3>Caso studio: Fognatura nera DN 800</h3>
+        
+        <p><strong>Traccia:</strong> Progettare una condotta fognaria nera in calcestruzzo prefabbricato con le seguenti caratteristiche:</p>
+        <ul>
+            <li>Portata di progetto: Q = 0.500 m³/s</li>
+            <li>Pendenza disponibile: S = 0.003</li>
+            <li>Materiale: Calcestruzzo liscio (prefabbricato)</li>
+        </ul>
+        
+        <h3>Soluzione con l'applicazione</h3>
+        
+        <table>
+            <thead>
+                <tr><th>Parametro</th><th>Valore inserito</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Materiale</td><td>Calcestruzzo liscio (prefabbricato) → n = 0.012, V_max = 6.0 m/s</td></tr>
+                <tr><td>Uso</td><td>Fognatura nera (acque reflue) → V_min = 0.60 m/s</td></tr>
+                <tr><td>Diametro D</td><td>1.000 m (DN 1000)</td></tr>
+                <tr><td>Pendenza S</td><td>0.003000</td></tr>
+                <tr><td>Portata Q</td><td>0.50000 m³/s</td></tr>
+            </tbody>
+        </table>
+        
+        <h3>Risultati ottenuti</h3>
+        <table>
+            <thead>
+                <tr><th>Grandezza</th><th>Simbolo</th><th>Valore</th><th>Unità</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Tirante idraulico</td><td>y</td><td>0.5247</td><td>m</td></tr>
+                <tr><td>Grado di riempimento</td><td>β</td><td>0.5247</td><td>—</td></tr>
+                <tr><td>Area bagnata</td><td>A</td><td>0.6283</td><td>m²</td></tr>
+                <tr><td>Perimetro bagnato</td><td>P</td><td>1.6494</td><td>m</td></tr>
+                <tr><td>Raggio idraulico</td><td>Rh</td><td>0.3810</td><td>m</td></tr>
+                <tr><td>Velocità media</td><td>V</td><td>0.7958</td><td>m/s</td></tr>
+                <tr><td>Numero di Froude</td><td>Fr</td><td>0.4975</td><td>—</td></tr>
+                <tr><td>Portata piena</td><td>Q_full</td><td>1.1812</td><td>m³/s</td></tr>
+                <tr><td>Portata massima</td><td>Q_max</td><td>1.2530</td><td>m³/s</td></tr>
+            </tbody>
+        </table>
+        
+        <h3>Verifiche normative</h3>
+        <table>
+            <thead>
+                <tr><th>Verifica</th><th>Valore</th><th>Limite</th><th>Esito</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>β ≤ 0.80</td><td>0.525</td><td>≤ 0.80</td><td><span class="badge-ok">OK</span></td></tr>
+                <tr><td>V ≥ 0.60 m/s</td><td>0.796 m/s</td><td>≥ 0.60</td><td><span class="badge-ok">OK</span></td></tr>
+                <tr><td>V ≤ 6.0 m/s</td><td>0.796 m/s</td><td>≤ 6.0</td><td><span class="badge-ok">OK</span></td></tr>
+                <tr><td>Q ≤ Q_max</td><td>0.500 ≤ 1.253</td><td>≤ 1.253</td><td><span class="badge-ok">OK</span></td></tr>
+                <tr><td>Fr < 1.0</td><td>0.498</td><td>&lt; 1.0</td><td><span class="badge-ok">OK</span></td></tr>
+                <tr><td>Q_full/Q ≥ 1.25</td><td>2.36</td><td>≥ 1.25</td><td><span class="badge-ok">OK</span></td></tr>
+            </tbody>
+        </table>
+        
+        <div class="note-card note-success">
+            <strong>Conclusioni dell'esempio</strong>
+            <p>La condotta DN 1000 in calcestruzzo con pendenza S = 0.003 è adeguata per la portata di progetto Q = 0.500 m³/s. Il grado di riempimento β = 0.525 rientra ampiamente nel limitenormativo β ≤ 0.80, la velocità V = 0.80 m/s è superiore alla V_min autocircolante e il regime è subcritico (Fr = 0.50). La condotta ha margine di capacità Q_full/Q = 2.36, adeguato per futuri incrementi di portata.</p>
+        </div>
+    </section>
+
+    <!-- GLOSSARIO -->
+    <section id="glossario" class="section">
+        <h2>10. Glossario Tecnico</h2>
+        
+        <table>
+            <thead>
+                <tr><th>Termine italiano</th><th>Termine inglese</th><th>Simbolo</th><th>Definizione</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Tirante idraulico</td><td>Flow depth</td><td>y</td><td>Altezza del pelo libero dell'acqua misurata dal fondo della condotta</td></tr>
+                <tr><td>Grado di riempimento</td><td>Filling ratio / Depth-to-diameter ratio</td><td>β</td><td>Rapporto tra tirante e diametro: β = y/D. Indica quanto la sezione è piena</td></tr>
+                <tr><td>Area bagnata</td><td>Wetted area</td><td>A</td><td>Sezione trasversale della condotta occupata dall'acqua</td></tr>
+                <tr><td>Perimetro bagnato</td><td>Wetted perimeter</td><td>P</td><td>Lunghezza del contorno della sezione a contatto con l'acqua</td></tr>
+                <tr><td>Raggio idraulico</td><td>Hydraulic radius</td><td>Rh</td><td>Rapporto tra area bagnata e perimetro bagnato: Rh = A/P</td></tr>
+                <tr><td>Portata</td><td>Discharge / Flow rate</td><td>Q</td><td>Volume di fluido che attraversa la sezione nell'unità di tempo [m³/s]</td></tr>
+                <tr><td>Velocità media</td><td>Mean velocity</td><td>V</td><td>Velocità media del flusso nella sezione: V = Q/A [m/s]</td></tr>
+                <tr><td>Pendenza idraulica</td><td>Hydraulic slope / Energy grade</td><td>S</td><td>Pendenza della linea dei carichi: S = Δh/L (adimensionale)</td></tr>
+                <tr><td>Coefficiente di Manning</td><td>Manning's n</td><td>n</td><td>Coefficiente di scabrezza che tiene conto della rugosità delle pareti</td></tr>
+                <tr><td>Numero di Froude</td><td>Froude number</td><td>Fr</td><td>Rapporto tra forze inerziali e forze di gravità: Fr = V/√(g·Dh)</td></tr>
+                <tr><td>Energia specifica</td><td>Specific energy</td><td>E</td><td>Energia per unità di peso misurata dal fondo: E = y + V²/2g</td></tr>
+                <tr><td>Moto uniforme</td><td>Uniform flow</td><td>—</td><td>Condizione in cui profondità e velocità sono costanti lungo il canale</td></tr>
+                <tr><td>Moto subcritico</td><td>Subcritical flow</td><td>—</td><td>Regime con Fr < 1, onde superficiali che risalgono la corrente</td></tr>
+                <tr><td>Moto supercritico</td><td>Supercritical flow</td><td>—</td><td>Regime con Fr > 1, onde superficiali trascinate dalla corrente</td></tr>
+                <tr><td>Autocircolante</td><td>Self-cleansing</td><td>—</td><td>Condizione in cui la velocità è sufficiente a prevenire depositi di sedimenti</td></tr>
+                <tr><td>Diametro nominale</td><td>Nominal diameter</td><td>DN</td><td>Denominazione standardizzata del diametro (es. DN 800 = 800 mm)</td></tr>
+                <tr><td>Larghezza superficie libera</td><td>Top width</td><td>T</td><td>Larghezza della superficie libera del flusso</td></tr>
+                <tr><td>Diametro idraulico</td><td>Hydraulic depth</td><td>Dh</td><td>Rapporto tra area bagnata e larghezza superficie: Dh = A/T</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p><strong>Condotte v2.0</strong> — Applicazione per il calcolo idraulico di condotte circolari in moto uniforme</p>
+    <p>Riferimenti normativi: DIN EN 1671:2011, EN 476:2011, ASCE MOP 36, UNI EN 752</p>
+    <div class="footer-disclaimer">
+        <p><strong>Disclaimer tecnico:</strong> L'applicazione è uno strumento di supporto alla progettazione. I risultati ottenuti devono essere verificati e validati da un ingegnere idraulico abilitato. L'autore non si assume responsabilità per errori progettuali derivanti dall'uso improprio o non validato del software. Le normative e i coefficienti implementati rappresentano valori di riferimento tipici e possono differire da quelli specifici di singoli progetti o contesti locali. Consultare sempre la documentazione normativa vigente e le specifiche tecniche dei materiali.</p>
+    </div>
+</footer>
+
+</body>
+</html>
